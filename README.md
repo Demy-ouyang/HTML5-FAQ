@@ -1,8 +1,8 @@
 ###H5项目常见问题及注意事项
-
+> [简书-移动WEB前端开发资源整合]( http://www.jianshu.com/p/9f8012a3af32)
+> [大前端-手机移动端WEB资源整合](http://www.daqianduan.com/6281.html)
 ####Meta基础知识： 
 - H5页面窗口自动调整到设备宽度，并禁止用户缩放页面
-
 * 一、HTML页面结构
 ``` HTML
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
@@ -116,6 +116,7 @@ if (/Android (\d+\.\d+)/.test(ua)){
 
 ####常见问题：
 - 移动端如何定义字体font-family
+
 ``` CSS
 @ --------------------------------------中文字体的英文名称
 @ 宋体      SimSun
@@ -130,14 +131,15 @@ if (/Android (\d+\.\d+)/.test(ua)){
 @ 楷体     KaiTi
 @ 仿宋_GB2312  FangSong_GB2312
 @ 楷体_GB2312  KaiTi_GB2312  
-@
-@ 说明：中文字体多数使用宋体、雅黑，英文用Helvetica
+
+ <!--说明：中文字体多数使用宋体、雅黑，英文用Helvetica-->
 
 body { font-family: Microsoft Yahei,SimSun,Helvetica; } 
 ```
 
 
 - 打电话发短信写邮件怎么实现
+
 ``` HTML
 // 一、打电话
 <a href="tel:0755-10086">打电话给:0755-10086</a>
@@ -169,6 +171,7 @@ body { font-family: Microsoft Yahei,SimSun,Helvetica; }
 
 
 - 移动端touch事件（区分webkit和winphone）
+
 ```
 /* 当用户手指放在移动设备在屏幕上滑动会触发的touch事件 */
 // 以下支持webkit
@@ -188,7 +191,7 @@ clientX、clientY在显示区的坐标
 target：当前元素
 
 //事件响应顺序
-ontouchstart  > ontouchmove  > ontouchend > onclick
+`ontouchstart  > ontouchmove  > ontouchend > onclick`
 
 // 以下支持winphone 8
 MSPointerDown——当手指触碰屏幕时候发生。不管当前有多少只手指
@@ -198,6 +201,7 @@ MSPointerUp——当手指离开屏幕时触发
 
 
 - 移动端click屏幕产生200-300ms的延时响应
+
 ```
 说明：移动设备上的web网页是有300ms延迟的，玩玩会造成按钮点击延迟甚至是点击失效。
 
@@ -215,6 +219,7 @@ zepto的touch模块，tap事件也是为了解决在click的延迟问题
 
 
 - Rentina显示屏原理及设计方案
+
 ```
 说明：retina屏是一种具备超高像素密度的液晶屏，同样大小的屏幕上显示的像素点由1个变为多个，如在同样带下的屏幕上，苹果设备的retina显示屏中，像素点1个变为4个。
 在高清显示屏中的位图被放大，图片会变得模糊，因此移动端的视觉稿通常会设计为传统PC的2倍。
@@ -237,6 +242,7 @@ image-set,webkit私有属性，也是CSS4的属性，为解决Rentina屏幕下�
 
 
 - 点击元素产生背景或边框怎么去掉
+
 ```
 //ios用户点击一个链接，会出现一个半透明灰色遮罩, 如果想要禁用，可设置-webkit-tap-highlight-color的alpha值为0去除灰色半透明遮罩；
 //android用户点击一个链接，会出现一个边框或者半透明灰色遮罩, 不同生产商定义出来额效果不一样，可设置-webkit-tap-highlight-color的alpha值为0去除部分机器自带的效果；
@@ -254,6 +260,7 @@ a,button,input,textarea {
 
 
 - 美化表单元素
+
 ``` CSS
 //一、使用appearance改变webkit浏览器的默认外观
 input,select { -webkit-appearance:none; appearance: none; }
@@ -270,19 +277,46 @@ input[type=checkbox]::-ms-check { display:none; }
 input[type=text]::-ms-clear,
 input[type=tel]::-ms-clear,
 input[type=number]::-ms-clear { display:none; }
+
+//4. 改变输入框placeholder的颜色值
+::-webkit-input-placeholder { /* WebKit browsers */
+color: #999; }
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+color: #999; }
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+color: #999; }
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+color: #999; }
+input:focus::-webkit-input-placeholder{ color:#999; }
+
+> webkit表单输入框placeholder的文字能换行么？ios可以，android不行。但是在textarea标签下都可以换行。
 ```
 
 
 - 移动端字体单位font-size选择px还是rem
+
 ```
 // 如需适配多种移动设备，建议使用rem。以下为参考值：
 html { font-size: 62.5%; }   //10*16 = 62.5%
 //设置12px字体   这里注意在rem前要加上对应的px值，解决不支持rem的浏览器的兼容问题，做到优雅降级
+
 body { font-size:12px; font-size:1.2rem; }     
+
+//rem配置参考：
+
+html{font-size:10px}
+@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+@media screen and (min-width:800px){html{font-size:25px}}
 ```
 
 
 - 超实用的CSS样式
+
 ```
 //去掉webkit的滚动条——display: none;
 //其他参数
@@ -299,17 +333,6 @@ a,img { -webkit-touch-callout: none }
 
 // 禁止ios和android用户选中文字
 html,body {-webkit-user-select:none; user-select: none; }
-
-// 改变输入框placeholder的颜色值
-::-webkit-input-placeholder { /* WebKit browsers */
-color: #999; }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-color: #999; }
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-color: #999; }
-:-ms-input-placeholder { /* Internet Explorer 10+ */
-color: #999; }
-input:focus::-webkit-input-placeholder{ color:#999; }
 
 // android上去掉语音输入按钮
 input::-webkit-input-speech-button {display: none}
@@ -335,6 +358,7 @@ html { -ms-touch-action:none; } //禁止winphone默认触摸事件
 
 
 - 屏幕旋转的事件和样式
+
 ``` JS&CSs
 //JS处理
 function orientInit(){
@@ -360,6 +384,7 @@ window.addEventListener('onorientationchange' in window?'orientationchange':'res
 
 
 - audio元素和video元素在ios和andriod中无法自动播放
+
 ```
 //音频，写法一
 <audio src="music/bg.mp3" autoplay loop controls>你的浏览器还不支持哦</audio>
@@ -387,6 +412,7 @@ document.addEventListener("WeixinJSBridgeReady", function () {
 ```
 
 - 重力感应事件
+
 ```
 // 运用HTML5的deviceMotion，调用重力感应事件
 if(window.DeviceMotionEvent){
@@ -418,6 +444,7 @@ function yaoAfter(){
 
 
 - 微信浏览器用户调整字体大小后页面矬了，怎么阻止用户调整
+
 ```
 //以下代码可使Android机页面不再受用户字体缩放强制改变大小，但是会有1S左右延时，期间可以考虑loading来处理
 if (typeof(WeixinJSBridge) == "undefined") {
@@ -443,6 +470,7 @@ body { -webkit-text-size-adjust:100%!important; }
 ```
 
 - 定位的坑
+
 ```
 //fixed定位
 //1.ios下fixed元素容易定位出错，软键盘弹出时，影响fixed元素定位

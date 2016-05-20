@@ -2,8 +2,9 @@
 
 ####Meta基础知识： 
 - H5页面窗口自动调整到设备宽度，并禁止用户缩放页面
-``` Javascript
-//一、HTML页面结构
+
+* 一、HTML页面结构
+``` HTML
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 // width    设置viewport宽度，为一个正整数，或字符串‘device-width’
 // height   设置viewport高度，一般设置了宽度，会自动解析出高度，可以不用设置
@@ -11,8 +12,9 @@
 // minimum-scale    允许用户最小缩放比例，为一个数字，可以带小数
 // maximum-scale    允许用户最大缩放比例，为一个数字，可以带小数
 // user-scalable    是否允许手动缩放
-
-//二、JS动态判断
+``` 
+* 二、JS动态判断
+``` Javascript
 var phoneWidth =  parseInt(window.screen.width);
 var phoneScale = phoneWidth/640;
 var ua = navigator.userAgent;
@@ -30,14 +32,14 @@ if (/Android (\d+\.\d+)/.test(ua)){
 
 - 空白页基本meta标签
 ```
-<!-- 设置缩放 -->
+<!-- H5页面窗口自动调整到设备宽度，并禁止用户缩放页面 -->
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
-<!-- 可隐藏地址栏，仅针对IOS的Safari（注：IOS7.0版本以后，safari上已看不到效果） -->
+<!--当网站添加到主屏幕快速启动方式，可隐藏地址栏，仅针对IOS的Safari（注：IOS7.0版本以后，safari上已看不到效果） -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<!-- 仅针对IOS的Safari顶端状态条的样式（可选default/black/black-translucent ） -->
+<!--将网站添加到主屏幕快速启动方式，仅针对IOS的Safari顶端状态条的样式（可选default/black/black-translucent ） -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<!-- IOS中禁用将数字识别为电话号码/忽略Android平台中对邮箱地址的识别 -->
-<meta name="format-detection"content="telephone=no, email=no" />
+<!-- IOS中忽略将页面中的数字识别为电话号码/忽略Android平台中对邮箱地址的识别 -->
+<meta name="format-detection" content="telephone=no, email=no" />
 ```
 
 - 其他meta标签
@@ -66,6 +68,51 @@ if (/Android (\d+\.\d+)/.test(ua)){
 <meta name="msapplication-tap-highlight" content="no">
 ```
 
+### viewport模板
+- viewport模板——通用
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>标题</title>
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+这里开始内容
+</body>
+
+</html>
+```
+- viewport模板 – target-densitydpi=device-dpi，android 2.3.5以下版本不支持
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=750, user-scalable=no, target-densitydpi=device-dpi"><!-- width取值与页面定义的宽度一致 -->
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>标题</title>
+<link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+这里开始内容
+</body>
+
+</html>
+```
 
 ####常见问题：
 - 移动端如何定义字体font-family
